@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="TextAppearance.Asclepius.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+		<item name="fontFamily">@font/cabinet_grotesk</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">500</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">500</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">500</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.BodySmall" parent="TextAppearance.Material3.BodySmall">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+	<style name="TextAppearance.Asclepius.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+		<item name="fontFamily">@font/satoshi</item>
+		<item name="fontWeight">400</item>
+	</style>
+
+</resources>
