@@ -1,42 +1,53 @@
 package com.dicoding.asclepius.view
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+	private lateinit var binding: ActivityMainBinding
 
-    private var currentImageUri: Uri? = null
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+		binding = ActivityMainBinding.inflate(layoutInflater)
+		val view = binding.root
+		setContentView(view)
 
-    private fun startGallery() {
-        // TODO: Mendapatkan gambar dari Gallery.
-    }
+		binding.viewPager.adapter = MainPagerAdapter(this)
+		TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+			tab.text = when (position) {
+				0 -> getString(R.string.analyze)
+				1 -> getString(R.string.history)
+				2 -> getString(R.string.insights)
+				else -> null
+			}
+			tab.icon = when (position) {
+				0 -> AppCompatResources.getDrawable(this, R.drawable.ic_emergency_24dp)
+				1 -> AppCompatResources.getDrawable(this, R.drawable.ic_image_24dp)
+				2 -> AppCompatResources.getDrawable(this, R.drawable.ic_newspaper_24dp)
+				else -> null
+			}
+		}.attach()
+	}
 
-    private fun showImage() {
-        // TODO: Menampilkan gambar sesuai Gallery yang dipilih.
-    }
+	private inner class MainPagerAdapter(activity: AppCompatActivity) :
+		FragmentStateAdapter(activity) {
 
-    private fun analyzeImage() {
-        // TODO: Menganalisa gambar yang berhasil ditampilkan.
-    }
+		override fun getItemCount(): Int = 3
 
-    private fun moveToResult() {
-        val intent = Intent(this, ResultActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
+		override fun createFragment(position: Int): Fragment {
+			return when (position) {
+				0 -> AnalyzeFragment.newInstance()
+				1 -> HistoryFragment.newInstance()
+				2 -> InsightsFragment.newInstance()
+				else -> throw IllegalArgumentException("Invalid position")
+			}
+		}
+	}
 }

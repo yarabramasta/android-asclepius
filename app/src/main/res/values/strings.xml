@@ -7,8 +7,12 @@
 	<string name="analyze_button">Analyze Image</string>
 	<string name="result">Hasil Analisis</string>
 	<string name="insights">Insights</string>
+	<string name="history">History</string>
 	<string name="analyze_description">Asclepius can help you identify cancer percentage. Take a photo of the skin lesion and let Asclepius do the rest.</string>
 	<string name="media_picker_desc">Pick a photo from gallery</string>
 	<string name="media_picker_card_desc">Photo can be JPEG or PNG up to 5MB</string>
 	<string name="img_preview_desc">Preview the selected image</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="cancelButtonLabel">Cancel</string>
 </resources>

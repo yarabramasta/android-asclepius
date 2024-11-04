@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".view.AnalyzeScreenFragment">
+	tools:context=".view.AnalyzeFragment">
 
 	<com.google.android.material.progressindicator.LinearProgressIndicator
 		android:id="@+id/progressIndicator"
@@ -55,9 +55,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:contentDescription="@string/img_preview_desc"
-				android:minHeight="320dp"
+				android:maxHeight="320dp"
+				android:scaleType="centerCrop"
 				android:visibility="gone"
-				app:layout_constraintBottom_toTopOf="@+id/galleryButton"
 				app:srcCompat="@drawable/ic_place_holder" />
 
 			<LinearLayout
@@ -102,9 +102,21 @@
 			android:id="@+id/analyzeButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:enabled="true"
 			android:minWidth="360dp"
 			android:text="@string/analyze_button"
-			android:visibility="visible" />
+			android:visibility="gone" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/cancelButton"
+			style="?attr/materialButtonOutlinedStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:enabled="true"
+			android:minWidth="360dp"
+			android:text="@string/cancelButtonLabel"
+			android:visibility="gone" />
 	</LinearLayout>
 
 </LinearLayout>
