@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".view.AnalyzeScreenFragment">
+
+	<com.google.android.material.progressindicator.LinearProgressIndicator
+		android:id="@+id/progressIndicator"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:indeterminate="true"
+		android:visibility="gone"
+		app:trackColor="@color/md_theme_primaryContainer" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:padding="24dp">
+
+		<com.google.android.material.textview.MaterialTextView
+			android:id="@+id/analyzeTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/analyze"
+			android:textAppearance="@style/TextAppearance.Asclepius.HeadlineSmall" />
+
+		<com.google.android.material.textview.MaterialTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="24dp"
+			android:text="@string/analyze_description"
+			android:textAppearance="@style/TextAppearance.Asclepius.BodyMedium"
+			android:textColor="@color/md_theme_onSurfaceVariant" />
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/galleryButton"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginBottom="24dp"
+			android:backgroundTint="@color/md_theme_surfaceContainerLow"
+			android:clickable="true"
+			android:elevation="0dp"
+			android:focusable="true"
+			android:foregroundGravity="center|fill"
+			android:minHeight="320dp">
+
+			<ImageView
+				android:id="@+id/previewImageView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/img_preview_desc"
+				android:minHeight="320dp"
+				android:visibility="gone"
+				app:layout_constraintBottom_toTopOf="@+id/galleryButton"
+				app:srcCompat="@drawable/ic_place_holder" />
+
+			<LinearLayout
+				android:id="@+id/mediaPickerLayout"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_margin="16dp"
+				android:baselineAligned="false"
+				android:gravity="center"
+				android:minHeight="320dp"
+				android:orientation="vertical"
+				android:visibility="visible">
+
+				<ImageView
+					android:layout_width="32dp"
+					android:layout_height="32dp"
+					android:importantForAccessibility="no"
+					android:src="@drawable/ic_image_24dp"
+					app:tint="@color/md_theme_outline" />
+
+				<com.google.android.material.textview.MaterialTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="4dp"
+					android:text="@string/media_picker_desc"
+					android:textAppearance="@style/TextAppearance.Asclepius.TitleSmall"
+					android:textColor="@color/md_theme_onSurfaceVariant"
+					app:fontFamily="@font/satoshi_medium" />
+
+				<com.google.android.material.textview.MaterialTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/media_picker_card_desc"
+					android:textAppearance="@style/TextAppearance.Asclepius.LabelMedium"
+					android:textColor="@color/md_theme_outline"
+					tools:ignore="TextContrastCheck" />
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/analyzeButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:minWidth="360dp"
+			android:text="@string/analyze_button"
+			android:visibility="visible" />
+	</LinearLayout>
+
+</LinearLayout>
