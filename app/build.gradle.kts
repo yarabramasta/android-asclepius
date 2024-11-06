@@ -10,6 +10,7 @@ android {
 	defaultConfig {
 		applicationId = "com.dicoding.asclepius"
 		minSdk = 24
+		//noinspection OldTargetApi
 		targetSdk = 34
 		versionCode = 1
 		versionName = "1.0"
@@ -35,6 +36,7 @@ android {
 	}
 	buildFeatures {
 		viewBinding = true
+		mlModelBinding = true
 	}
 }
 
@@ -46,6 +48,9 @@ dependencies {
 	implementation("androidx.constraintlayout:constraintlayout:2.2.0")
 	implementation("androidx.legacy:legacy-support-v4:1.0.0")
 	implementation("androidx.recyclerview:recyclerview:1.3.2")
+	implementation("androidx.compose.material3:material3-android:1.3.1")
+	implementation("androidx.exifinterface:exifinterface:1.3.7")
+
 	testImplementation("junit:junit:4.13.2")
 	androidTestImplementation("androidx.test.ext:junit:1.2.1")
 	androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -57,5 +62,7 @@ dependencies {
 
 	implementation("com.github.yalantis:ucrop:2.2.9-native")
 
-	// TODO: Tambahkan Library TensorFlow Lite
+//	implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
+	implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+	implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
 }

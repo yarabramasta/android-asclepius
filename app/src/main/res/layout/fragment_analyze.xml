@@ -53,9 +53,8 @@
 			<ImageView
 				android:id="@+id/previewImageView"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_height="320dp"
 				android:contentDescription="@string/img_preview_desc"
-				android:maxHeight="320dp"
 				android:scaleType="centerCrop"
 				android:visibility="gone"
 				app:srcCompat="@drawable/ic_place_holder" />
@@ -115,7 +114,7 @@
 			android:layout_height="wrap_content"
 			android:enabled="true"
 			android:minWidth="360dp"
-			android:text="@string/cancelButtonLabel"
+			android:text="@string/cancel_button"
 			android:visibility="gone" />
 	</LinearLayout>
 
