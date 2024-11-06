@@ -21,12 +21,6 @@ class MainActivity : AppCompatActivity() {
 
 		binding.viewPager.adapter = MainPagerAdapter(this)
 		TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-			tab.text = when (position) {
-				0 -> getString(R.string.analyze)
-				1 -> getString(R.string.history)
-				2 -> getString(R.string.insights)
-				else -> null
-			}
 			tab.icon = when (position) {
 				0 -> AppCompatResources.getDrawable(this, R.drawable.ic_emergency_24dp)
 				1 -> AppCompatResources.getDrawable(this, R.drawable.ic_image_24dp)

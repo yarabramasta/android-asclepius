@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity.RESULT_CANCELED
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.fragment.app.Fragment
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
+import com.dicoding.asclepius.domain.models.ResultData
 import com.dicoding.asclepius.helper.ImageClassifierHelper
 import com.google.android.material.color.MaterialColors
 import com.yalantis.ucrop.UCrop
@@ -54,9 +54,12 @@ class AnalyzeFragment : Fragment() {
 
 				override fun onResults(results: List<Classifications>?, inferenceTime: Long) {
 					activity?.runOnUiThread {
-						Log.d("AnalyzeFragment", "Results: $results")
-						showToast("Inference time: $inferenceTime ms")
-						moveToResult()
+						if (results.isNullOrEmpty()) {
+							showToast("Uh oh! Something went wrong...")
+						} else {
+							showToast("Successfully analyzed image in $inferenceTime ms")
+							moveToResult(results)
+						}
 					}
 				}
 			}
@@ -154,6 +157,7 @@ class AnalyzeFragment : Fragment() {
 	private fun analyzeImage() {
 		binding.analyzeButton.isEnabled = false
 		binding.cancelButton.isEnabled = false
+		binding.galleryButton.isClickable = false
 		binding.progressIndicator.visibility = View.VISIBLE
 
 		if (currentImageUri != null) {
@@ -167,10 +171,31 @@ class AnalyzeFragment : Fragment() {
 		resetViewsState()
 	}
 
-	private fun moveToResult() {
+	private fun moveToResult(results: List<Classifications>) {
 		resetViewsState()
 
+		val categories = results[0].categories
+		if (categories.isEmpty()) {
+			showToast("No classification categories found")
+			return
+		}
+
+		val highestCategory = categories.maxByOrNull { it.score }
+		if (highestCategory == null) {
+			showToast("No highest classification category found")
+			return
+		}
+
+		val label = highestCategory.label.trim()
+		val score = (highestCategory.score * 100).toInt()
+
+		val resultData = ResultData(
+			imageUri = currentImageUri!!,
+			confidenceScore = "$label ($score%)",
+		)
+
 		val intent = Intent(requireContext(), ResultActivity::class.java)
+		intent.putExtra("result_data", resultData)
 		startActivity(intent)
 	}
 
@@ -205,9 +230,11 @@ class AnalyzeFragment : Fragment() {
 		binding.analyzeButton.isEnabled = true
 		binding.cancelButton.visibility = View.GONE
 		binding.cancelButton.isEnabled = true
-		
+
 		binding.mediaPickerLayout.visibility = View.VISIBLE
 		binding.progressIndicator.visibility = View.GONE
+
+		binding.galleryButton.isClickable = true
 	}
 
 	override fun onDestroyView() {
