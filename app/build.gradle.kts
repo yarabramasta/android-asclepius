@@ -1,5 +1,13 @@
 import java.util.Properties
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+	localPropertiesFile.inputStream().use {
+		localProperties.load(it)
+	}
+}
+
 plugins {
 	id("com.android.application")
 	id("org.jetbrains.kotlin.android")
@@ -8,14 +16,6 @@ plugins {
 	id("com.google.devtools.ksp")
 	id("org.jetbrains.kotlin.plugin.serialization")
 	id("com.google.dagger.hilt.android")
-}
-
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-	localPropertiesFile.inputStream().use {
-		localProperties.load(it)
-	}
 }
 
 android {
@@ -59,15 +59,14 @@ android {
 	}
 
 	buildFeatures {
-		compose = true
 		viewBinding = true
 		mlModelBinding = true
+		compose = true
 		buildConfig = true
 	}
 }
 
 dependencies {
-
 	implementation("androidx.core:core-ktx:1.15.0")
 	implementation("androidx.activity:activity-ktx:1.9.3")
 	implementation("androidx.fragment:fragment-ktx:1.8.5")
@@ -83,7 +82,6 @@ dependencies {
 	androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
 	implementation(platform("androidx.compose:compose-bom:2024.10.01"))
-	androidTestImplementation(platform("androidx.compose:compose-bom:2024.10.01"))
 	implementation("androidx.compose.runtime:runtime")
 	implementation("androidx.compose.ui:ui")
 	implementation("androidx.compose.foundation:foundation")
@@ -94,8 +92,8 @@ dependencies {
 	implementation("androidx.compose.ui:ui-tooling-preview")
 	implementation("androidx.compose.material:material-icons-extended")
 	implementation("androidx.compose.ui:ui-text-google-fonts:1.7.5")
+	androidTestImplementation(platform("androidx.compose:compose-bom:2024.10.01"))
 
-	implementation("com.github.yalantis:ucrop:2.2.9-native")
 	implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
 	implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
 
@@ -114,4 +112,9 @@ dependencies {
 	implementation("com.github.skydoves:sandwich:2.0.10")
 	implementation("com.github.skydoves:sandwich-retrofit:2.0.10")
 	implementation("com.github.skydoves:sandwich-retrofit-serialization:2.0.10")
+
+	implementation("com.github.yalantis:ucrop:2.2.9-native")
+	implementation("io.coil-kt.coil3:coil:3.0.1")
+	implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.1")
+	implementation("com.github.skydoves:landscapist-coil3:2.4.2")
 }

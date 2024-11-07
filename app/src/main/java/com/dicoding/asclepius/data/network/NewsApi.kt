@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface NewsApi {
 
-	@GET("/top-headlines")
+	@GET("top-headlines")
 	suspend fun getNews(
 		@Query("q") q: String = "cancer",
 		@Query("category") category: String = "health",

@@ -41,7 +41,7 @@ object ServiceModule {
 	fun provideRetrofit(okHttp: OkHttpClient): Retrofit =
 		Retrofit
 			.Builder()
-			.baseUrl("https://newsapi.org/v2")
+			.baseUrl("https://newsapi.org/v2/")
 			.addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
 			.addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
 			.client(okHttp)

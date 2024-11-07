@@ -24,7 +24,7 @@ import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 fun HistoryListItem(
 	modifier: Modifier = Modifier,
 	item: AnalyzeResult,
-	onDeleteItem: (AnalyzeResult) -> Unit,
+	onDeletePressed: (AnalyzeResult) -> Unit,
 ) {
 	val context = LocalContext.current
 	var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
@@ -64,7 +64,7 @@ fun HistoryListItem(
 			)
 		},
 		trailingContent = {
-			IconButton(onClick = { onDeleteItem(item) }) {
+			IconButton(onClick = { onDeletePressed(item) }) {
 				Icon(
 					Icons.Filled.DeleteForever,
 					contentDescription = "Delete",
@@ -73,17 +73,4 @@ fun HistoryListItem(
 			}
 		},
 	)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HistoryListItemPreview() {
-	val item = AnalyzeResult.fake()
-
-	AppTheme {
-		HistoryListItem(
-			item = item,
-			onDeleteItem = {},
-		)
-	}
 }

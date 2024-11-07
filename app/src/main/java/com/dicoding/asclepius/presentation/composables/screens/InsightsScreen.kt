@@ -2,17 +2,19 @@ package com.dicoding.asclepius.presentation.composables.screens
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.asclepius.domain.models.Article
+import com.dicoding.asclepius.presentation.composables.atoms.ArticleListItem
+import com.dicoding.asclepius.presentation.composables.atoms.ShimmerItem
 import com.dicoding.asclepius.presentation.composables.utils.rememberFlowWithLifecycle
 import com.dicoding.asclepius.presentation.viewmodel.NewsViewModel
 
@@ -69,11 +71,48 @@ private fun InsightsScreenContent(
 	onClickNews: (Article) -> Unit,
 ) {
 	LazyColumn(
-		modifier = modifier.fillMaxSize()
+		modifier = modifier.fillMaxSize(),
+		contentPadding = PaddingValues(vertical = 24.dp)
 	) {
-		items(articles, key = { it.url }) { article ->
-			Text(article.title)
+		item {
+			Text(
+				text = "Insights",
+				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(horizontal = 24.dp)
+			)
+			Spacer(modifier = Modifier.height(4.dp))
+			Text(
+				text = "Read the latest news about cancer related topics.",
+				style = MaterialTheme.typography.bodyMedium,
+				color = MaterialTheme.colorScheme.onSurfaceVariant,
+				modifier = Modifier.padding(horizontal = 24.dp)
+			)
+			Spacer(modifier = Modifier.height(24.dp))
+		}
+
+		if (!isLoading && !hasError) {
+			if (articles.isEmpty()) {
+				item {
+					Text(
+						text = "No article found. Try to refresh...",
+						style = MaterialTheme.typography.bodyMedium,
+						color = MaterialTheme.colorScheme.onSurfaceVariant,
+						modifier = Modifier.padding(horizontal = 24.dp)
+					)
+				}
+			} else {
+				items(articles, key = { it.url }) { article ->
+					Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+						ArticleListItem(item = article, onPressed = { onClickNews(article) })
+					}
+				}
+			}
+		} else {
+			items(5) {
+				Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+					ShimmerItem(animate = !hasError)
+				}
+			}
 		}
 	}
 }
-

@@ -127,8 +127,9 @@ class AnalyzeFragment : Fragment() {
 			.withOptions(
 				UCrop.Options().apply {
 					setCompressionQuality(90)
-					setHideBottomControls(true)
+					setHideBottomControls(false)
 					setFreeStyleCropEnabled(false)
+					setShowCropGrid(false)
 					setToolbarColor(
 						MaterialColors.getColor(
 							requireActivity() as MainActivity,
