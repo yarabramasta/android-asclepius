@@ -25,6 +25,7 @@ class HistoryFragment : Fragment() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
 				vm.add(AnalyzeResultsViewModel.Event.OnFetch)

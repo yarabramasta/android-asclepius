@@ -1,5 +1,6 @@
 package com.dicoding.asclepius.presentation.viewmodel
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.domain.repositories.AnalyzeResultsRepository
@@ -21,11 +22,13 @@ class AnalyzeResultsViewModel @Inject constructor(
 			Event.OnFetch -> {
 				setState { copy(isFetching = true) }
 				fetchResults()
+				setState { copy(isFetching = false) }
 			}
 
 			Event.OnRefresh -> {
 				setState { copy(isRefreshing = true) }
 				fetchResults()
+				setState { copy(isRefreshing = false) }
 			}
 
 			is Event.OnSaved -> saveResultToHistory(event.result)
@@ -76,7 +79,7 @@ class AnalyzeResultsViewModel @Inject constructor(
 	}
 
 	// ========= CONTRACT =========
-
+	@Immutable
 	data class State(
 		val isFetching: Boolean,
 		val isRefreshing: Boolean,

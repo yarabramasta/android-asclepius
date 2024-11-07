@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dicoding.asclepius.R
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
 	@Suppress("unused")
 	private val _analyzeResultsVm: AnalyzeResultsViewModel by viewModels()
-	
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -28,6 +29,15 @@ class MainActivity : AppCompatActivity() {
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		val view = binding.root
 		setContentView(view)
+
+		ViewCompat.setOnApplyWindowInsetsListener(binding.mainLayout) { layout, insets ->
+			val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+			layout.updatePadding(
+				top = systemBarsInsets.top,
+				bottom = systemBarsInsets.bottom
+			)
+			WindowInsetsCompat.CONSUMED
+		}
 
 		binding.viewPager.adapter = MainPagerAdapter(this)
 		TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
