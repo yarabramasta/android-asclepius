@@ -14,11 +14,9 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.domain.models.getConfidenceScoreString
-import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 
 @Composable
 fun HistoryListItem(
