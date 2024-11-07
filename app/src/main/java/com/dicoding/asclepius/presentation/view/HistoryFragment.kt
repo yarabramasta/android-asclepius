@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.*
 import com.dicoding.asclepius.databinding.FragmentHistoryBinding
+import com.dicoding.asclepius.presentation.composables.screens.HistoryScreen
+import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +22,15 @@ class HistoryFragment : Fragment() {
 	private val binding get() = _binding!!
 
 	private val vm: AnalyzeResultsViewModel by activityViewModels()
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				vm.add(AnalyzeResultsViewModel.Event.OnFetch)
+			}
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +45,9 @@ class HistoryFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 		binding.composeView.setContent {
-
+			AppTheme {
+				HistoryScreen(vm = vm)
+			}
 		}
 	}
 

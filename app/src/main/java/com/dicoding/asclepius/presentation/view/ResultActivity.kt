@@ -3,6 +3,7 @@ package com.dicoding.asclepius.presentation.view
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.asclepius.databinding.ActivityResultBinding
 import com.dicoding.asclepius.domain.models.AnalyzeResult
@@ -15,6 +16,8 @@ class ResultActivity : AppCompatActivity() {
 	@SuppressLint("SetTextI18n")
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
+		enableEdgeToEdge()
 
 		binding = ActivityResultBinding.inflate(layoutInflater)
 		val view = binding.root

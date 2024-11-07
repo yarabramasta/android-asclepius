@@ -34,10 +34,6 @@ class AnalyzeResultsViewModel @Inject constructor(
 		}
 	}
 
-	init {
-		add(Event.OnFetch)
-	}
-
 	private fun fetchResults() {
 		viewModelScope.launch {
 			repo.getAnalyzeResults().collect { (results, error) ->

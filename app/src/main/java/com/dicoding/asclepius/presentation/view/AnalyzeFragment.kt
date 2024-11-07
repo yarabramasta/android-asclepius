@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity.RESULT_CANCELED
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.*
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.helper.ImageClassifierHelper
 import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
 import com.google.android.material.color.MaterialColors
 import com.yalantis.ucrop.UCrop
+import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.*
 
