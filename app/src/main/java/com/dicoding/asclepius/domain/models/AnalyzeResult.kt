@@ -12,7 +12,7 @@ import kotlin.random.Random
 @Immutable
 @Parcelize
 data class AnalyzeResult(
-	val id: Int? = null,
+	val id: Int = 0,
 	val imageUri: Uri,
 	val label: String,
 	val confidenceScore: Float,

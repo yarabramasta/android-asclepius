@@ -6,8 +6,11 @@
 	<string name="analyze">Analyze</string>
 	<string name="analyze_button">Analyze Image</string>
 	<string name="cancel_button">Cancel</string>
-	<string name="result">Hasil Analisis</string>
-	<string name="result_placeholder">Hasil analisis akan muncul di sini</string>
+	<string name="result">Analyze Result</string>
+	<string name="result_description">
+		This is the result of the analysis. The percentage of cancer or non cancer is displayed here.
+	</string>
+	<string name="result_placeholder">Analysis result will be displayed here</string>
 	<!--	<string name="insights">Insights</string>-->
 	<!--	<string name="history">History</string>-->
 	<string name="analyze_description">Asclepius can help you identify cancer percentage. Take a photo of the skin lesion and let Asclepius do the rest.</string>

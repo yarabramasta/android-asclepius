@@ -33,7 +33,7 @@ class AnalyzeResultsViewModel @Inject constructor(
 
 			is Event.OnSaved -> saveResultToHistory(event.result)
 
-			is Event.OnDeleted -> removeResultFromHistory(event.result)
+			is Event.OnDeleteItem -> removeResultFromHistory(event.result)
 		}
 	}
 
@@ -100,7 +100,7 @@ class AnalyzeResultsViewModel @Inject constructor(
 		data object OnFetch : Event()
 		data object OnRefresh : Event()
 		data class OnSaved(val result: AnalyzeResult) : Event()
-		data class OnDeleted(val result: AnalyzeResult) : Event()
+		data class OnDeleteItem(val result: AnalyzeResult) : Event()
 	}
 
 	sealed class Effect {

@@ -13,11 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dicoding.asclepius.domain.models.AnalyzeResult
-import com.dicoding.asclepius.domain.models.getConfidenceScoreString
+import com.dicoding.asclepius.presentation.composables.atoms.HistoryListItem
+import com.dicoding.asclepius.presentation.composables.atoms.ShimmerItem
 import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 import com.dicoding.asclepius.presentation.composables.utils.rememberFlowWithLifecycle
 import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
-import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +50,12 @@ fun HistoryScreen(
 	) {
 		HistoryScreenContent(
 			modifier = modifier,
-			results = state.results
+			histories = state.results.reversed(),
+			isLoading = state.isFetching || state.isRefreshing,
+			hasError = state.error != null,
+			onDeleteHistory = {
+				vm.add(AnalyzeResultsViewModel.Event.OnDeleteItem(it))
+			}
 		)
 	}
 }
@@ -58,31 +63,55 @@ fun HistoryScreen(
 @Composable
 private fun HistoryScreenContent(
 	modifier: Modifier = Modifier,
-	results: List<AnalyzeResult>,
+	histories: List<AnalyzeResult>,
+	isLoading: Boolean,
+	hasError: Boolean,
+	onDeleteHistory: (AnalyzeResult) -> Unit,
 ) {
 	LazyColumn(
 		modifier = modifier.fillMaxSize(),
-		contentPadding = PaddingValues(24.dp)
+		contentPadding = PaddingValues(vertical = 24.dp)
 	) {
 		item {
 			Text(
 				text = "History",
 				style = MaterialTheme.typography.headlineSmall,
+				modifier = Modifier.padding(horizontal = 24.dp)
 			)
 			Spacer(modifier = Modifier.height(4.dp))
 			Text(
 				text = "This is a list of all the images you've analyzed.",
 				style = MaterialTheme.typography.bodyMedium,
-				color = MaterialTheme.colorScheme.onSurfaceVariant
+				color = MaterialTheme.colorScheme.onSurfaceVariant,
+				modifier = Modifier.padding(horizontal = 24.dp)
 			)
 			Spacer(modifier = Modifier.height(24.dp))
 		}
 
-		items(
-			items = results,
-			key = { it.id ?: Random.nextInt() }
-		) { result ->
-			Text(text = result.getConfidenceScoreString())
+		if (!isLoading && !hasError) {
+			if (histories.isEmpty()) {
+				item {
+					Text(
+						text = "No history yet.",
+						style = MaterialTheme.typography.bodyMedium,
+						color = MaterialTheme.colorScheme.onSurfaceVariant,
+						modifier = Modifier.padding(horizontal = 24.dp)
+					)
+				}
+			} else {
+				items(items = histories, key = { it.id }) { result ->
+					Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+						HistoryListItem(
+							item = result,
+							onDeleteItem = onDeleteHistory,
+						)
+					}
+				}
+			}
+		} else {
+			items(5) {
+				ShimmerItem(animate = !hasError)
+			}
 		}
 	}
 }
@@ -90,15 +119,13 @@ private fun HistoryScreenContent(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HistoryScreenPreview() {
-	val items = listOf(
-		AnalyzeResult.fake(),
-		AnalyzeResult.fake(),
-		AnalyzeResult.fake(),
-		AnalyzeResult.fake(),
-		AnalyzeResult.fake(),
-	).distinctBy { it.id ?: Random.nextInt() }
 
 	AppTheme {
-		HistoryScreenContent(results = items)
+		HistoryScreenContent(
+			histories = emptyList(),
+			isLoading = true,
+			hasError = false,
+			onDeleteHistory = { }
+		)
 	}
 }

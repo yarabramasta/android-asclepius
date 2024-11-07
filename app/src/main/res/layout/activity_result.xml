@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/mainLayout"
-	xmlns:tools="http://schemas.android.com/tools"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/mainLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".presentation.view.ResultActivity">
@@ -20,9 +20,9 @@
 				android:id="@+id/topAppBar"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				app:title="@string/result"
 				android:minHeight="?attr/actionBarSize"
-				app:navigationIcon="@drawable/ic_arrow_back_24dp" />
+				app:navigationIcon="@drawable/ic_arrow_back_24dp"
+				app:title="@string/result" />
 		</com.google.android.material.appbar.AppBarLayout>
 
 		<LinearLayout
@@ -53,18 +53,25 @@
 			<com.google.android.material.textview.MaterialTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginBottom="4dp"
 				android:text="@string/result"
 				android:textAppearance="@style/TextAppearance.Asclepius.HeadlineSmall" />
+
+			<com.google.android.material.textview.MaterialTextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				android:text="@string/result_description"
+				android:textAppearance="@style/TextAppearance.Asclepius.BodyMedium"
+				android:textColor="@color/md_theme_onSurfaceVariant" />
 
 			<com.google.android.material.textview.MaterialTextView
 				android:id="@+id/result_text"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="@string/result_placeholder"
-				android:layout_marginTop="8dp"
 				android:layout_marginBottom="24dp"
-				android:textAppearance="@style/TextAppearance.Asclepius.BodyMedium"
-				android:textColor="@color/md_theme_onSurfaceVariant" />
+				android:text="@string/result_placeholder"
+				android:textAppearance="@style/TextAppearance.Asclepius.TitleMedium" />
 		</LinearLayout>
 	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

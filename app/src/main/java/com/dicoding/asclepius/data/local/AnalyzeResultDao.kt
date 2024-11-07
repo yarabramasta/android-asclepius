@@ -10,6 +10,6 @@ interface AnalyzeResultDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun saveResult(analyzeResult: AnalyzeResultEntity)
 
-	@Query("DELETE FROM analyze_result WHERE image_uri = :imageUri")
-	suspend fun deleteResult(imageUri: String)
+	@Query("DELETE FROM analyze_result WHERE id = :id")
+	suspend fun deleteResult(id: Int)
 }

@@ -43,7 +43,7 @@ class AnalyzeResultsRepositoryImpl @Inject constructor(
 	override suspend fun deleteAnalyzeResult(result: AnalyzeResult): Pair<Boolean, Throwable?> {
 		return withContext(ioDispatcher) {
 			try {
-				dao.deleteResult(result.imageUri.toString())
+				dao.deleteResult(result.id)
 				Pair(true, null)
 			} catch (e: Exception) {
 				Pair(false, e)
