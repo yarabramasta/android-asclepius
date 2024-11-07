@@ -1,13 +1,15 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.presentation.view
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.asclepius.databinding.ActivityResultBinding
-import com.dicoding.asclepius.domain.models.ResultData
+import com.dicoding.asclepius.domain.models.AnalyzeResult
+import com.dicoding.asclepius.domain.models.getConfidenceScoreString
 
 class ResultActivity : AppCompatActivity() {
+
 	private lateinit var binding: ActivityResultBinding
 
 	@SuppressLint("SetTextI18n")
@@ -19,13 +21,13 @@ class ResultActivity : AppCompatActivity() {
 		setContentView(view)
 
 		val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-			intent.getParcelableExtra("result_data", ResultData::class.java)
+			intent.getParcelableExtra("analyze_result", AnalyzeResult::class.java)
 		} else {
-			@Suppress("DEPRECATION") intent.getParcelableExtra("result_data")
+			@Suppress("DEPRECATION") intent.getParcelableExtra("analyze_result")
 		}
 
 		if (result != null) {
-			binding.resultText.text = "Terdeteksi: ${result.confidenceScore}"
+			binding.resultText.text = "Terdeteksi: ${result.getConfidenceScoreString()}"
 			binding.resultImage.setImageURI(result.imageUri)
 		}
 

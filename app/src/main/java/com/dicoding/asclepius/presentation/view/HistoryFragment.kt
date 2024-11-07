@@ -1,9 +1,11 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.presentation.view
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.dicoding.asclepius.databinding.FragmentHistoryBinding
+import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -15,6 +17,8 @@ class HistoryFragment : Fragment() {
 	private var _binding: FragmentHistoryBinding? = null
 	private val binding get() = _binding!!
 
+	private val vm: AnalyzeResultsViewModel by activityViewModels()
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -22,6 +26,14 @@ class HistoryFragment : Fragment() {
 		_binding = FragmentHistoryBinding.inflate(inflater, container, false)
 		val view = binding.root
 		return view
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+
+		binding.composeView.setContent {
+
+		}
 	}
 
 	companion object {

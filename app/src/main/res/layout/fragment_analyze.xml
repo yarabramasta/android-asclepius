@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".view.AnalyzeFragment">
+	tools:context=".presentation.view.AnalyzeFragment">
 
 	<com.google.android.material.progressindicator.LinearProgressIndicator
 		android:id="@+id/progressIndicator"

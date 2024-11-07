@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.presentation.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -11,9 +11,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity.RESULT_CANCELED
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
-import com.dicoding.asclepius.domain.models.ResultData
+import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.helper.ImageClassifierHelper
+import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
 import com.google.android.material.color.MaterialColors
 import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.task.vision.classifier.Classifications
@@ -28,6 +30,8 @@ class AnalyzeFragment : Fragment() {
 
 	private var _binding: FragmentAnalyzeBinding? = null
 	private val binding get() = _binding!!
+
+	private val vm: AnalyzeResultsViewModel by activityViewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -142,7 +146,11 @@ class AnalyzeFragment : Fragment() {
 
 	private fun startGallery() {
 		binding.progressIndicator.visibility = View.VISIBLE
-		pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+		pickMedia.launch(
+			PickVisualMediaRequest(
+				ActivityResultContracts.PickVisualMedia.ImageOnly
+			)
+		)
 		binding.progressIndicator.visibility = View.GONE
 	}
 
@@ -186,16 +194,16 @@ class AnalyzeFragment : Fragment() {
 			return
 		}
 
-		val label = highestCategory.label.trim()
-		val score = (highestCategory.score * 100).toInt()
-
-		val resultData = ResultData(
+		val result = AnalyzeResult(
 			imageUri = currentImageUri!!,
-			confidenceScore = "$label ($score%)",
+			label = highestCategory.label.trim(),
+			confidenceScore = highestCategory.score,
 		)
 
+		vm.add(AnalyzeResultsViewModel.Event.OnSaved(result))
+
 		val intent = Intent(requireContext(), ResultActivity::class.java)
-		intent.putExtra("result_data", resultData)
+		intent.putExtra("analyze_result", result)
 		startActivity(intent)
 	}
 
