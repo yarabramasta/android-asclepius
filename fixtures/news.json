@@ -1,0 +1,110 @@
+{
+  "articles": [
+    {
+      "author": "David Oliver",
+      "content": "James Van Der Beek has colorectal cancer a shocking, scary diagnosis for anyone. And 47 years old is especially young for such a condition, right?\r\nNot exactly. Colorectal cancer is one of 17 differe… [+5358 chars]",
+      "description": "Why are young people getting cancer at higher rates? No one knows, but here's how to stay proactive and vigilant.",
+      "publishedAt": "2024-11-06T10:10:04Z",
+      "source": {
+        "id": "usa-today",
+        "name": "USA Today"
+      },
+      "title": "James Van Der Beek, Jenna Fischer and the rise of young people getting cancer - USA TODAY",
+      "url": "https://www.usatoday.com/story/life/health-wellness/2024/11/04/james-van-der-beek-jenna-fischer-cancer-young/75576304007/",
+      "urlToImage": "https://www.usatoday.com/gcdn/authoring/authoring-images/2024/11/03/USAT/76033525007-gty-1176245187.JPG?crop=2666,1500,x0,y0&width=2666&height=1500&format=pjpg&auto=webp"
+    },
+    {
+      "author": null,
+      "content": "[Removed]",
+      "description": "[Removed]",
+      "publishedAt": "2024-11-06T05:00:00Z",
+      "source": {
+        "id": null,
+        "name": "[Removed]"
+      },
+      "title": "[Removed]",
+      "url": "https://removed.com",
+      "urlToImage": null
+    },
+    {
+      "author": "Laura Simmons",
+      "content": "A serendipitous discovery may lead to a new way of fighting cancer even tumors that are resistant to immunotherapy by suppressing a mechanism that cancer cells use to evade the bodys immune system.\r\n… [+3011 chars]",
+      "description": "Observing how sunlight affects skin led scientists down the path to new cancer treatments.",
+      "publishedAt": "2024-11-05T15:55:30Z",
+      "source": {
+        "id": null,
+        "name": "IFLScience"
+      },
+      "title": "New Cancer Discovery Releases “Brakes” On Immune System To Treat Stubborn Tumors - IFLScience",
+      "url": "https://www.iflscience.com/new-cancer-discovery-releases-brakes-on-immune-system-to-treat-stubborn-tumors-76650",
+      "urlToImage": "https://assets.iflscience.com/assets/articleNo/76650/aImg/80002/tumor-and-antibodies-meta.jpg"
+    },
+    {
+      "author": "Reda Wigle",
+      "content": "More than a dozen chemicals used in popular weed killers like Roundup could be raising the risk of prostate cancer, shocking new research has revealed.\r\nIn a report published in the journal Cancer, r… [+5219 chars]",
+      "description": "Thumbs down for Roundup. Shocking research has revealed that more than a dozen chemicals used in popular weed killers like Roundup could be killing us… specifically by raising the risk of pro…",
+      "publishedAt": "2024-11-05T15:51:00Z",
+      "source": {
+        "id": null,
+        "name": "New York Post"
+      },
+      "title": "This common lawn care staple may increase prostate cancer risk — after company was ordered to pay $2.25 billion - New York Post ",
+      "url": "https://nypost.com/2024/11/05/lifestyle/weed-killing-chemical-could-be-to-blame-for-new-crop-of-cancer/",
+      "urlToImage": "https://nypost.com/wp-content/uploads/sites/2/2024/11/spraying-dandelions-green-yellow-atomizer-93083066.jpg?quality=75&strip=all&w=1024"
+    },
+    {
+      "author": "Emily Brown",
+      "content": "Warning: This article contains discussion of cancer which some readers may find distressing\r\nA doctor who discovered her own cancer when she was 37-years-old has spoken out about the two symptoms tha… [+3426 chars]",
+      "description": "Gynecologist Dr. Lauren Juyia, from Florida, was just 37 years old when she learned of her diagnosis",
+      "publishedAt": "2024-11-05T11:15:43Z",
+      "source": {
+        "id": null,
+        "name": "Unilad.com"
+      },
+      "title": "Doctor who was diagnosed with stage 4 colon cancer shares two specific symptoms to look out for - UNILAD",
+      "url": "https://www.unilad.com/news/health/dr-lauren-juyia-colon-cancer-symptoms-457272-20241105",
+      "urlToImage": "https://images.ladbible.com/resize?type=webp&quality=70&width=1200&fit=contain&gravity=auto&url=https://images.ladbiblegroup.com/v3/assets/blt949ea8e16e463049/bltbe7b5d1ae5d9f872/6729fe5696c0872d81f3b674/doctor-on-colon-cancer-signs_.png"
+    },
+    {
+      "author": "Leigh Hataway",
+      "content": "In addition to lowering your cholesterol, keeping your brain healthy and improving mental health, new research from the University of Georgia suggests omega-3 and omega-6 fatty acids may help ward of… [+3378 chars]",
+      "description": "In addition to lowering your cholesterol, keeping your brain healthy and improving mental health, new research from the University of Georgia suggests omega-3 and omega-6 fatty acids may help ward off a variety of cancers.",
+      "publishedAt": "2024-11-04T21:17:04Z",
+      "source": {
+        "id": null,
+        "name": "Medical Xpress"
+      },
+      "title": "High levels of omega-3, omega-6 may protect against cancer - Medical Xpress",
+      "url": "https://medicalxpress.com/news/2024-11-high-omega-cancer.html",
+      "urlToImage": "https://scx2.b-cdn.net/gfx/news/hires/2024/fish-oil.jpg"
+    },
+    {
+      "author": "Alfonso Maruccia",
+      "content": "In context: Every day, billions of cells in the human body die thanks to a natural process known as apoptosis. When apoptosis doesn't work by design, cells get cancerous and can cause a life-threaten… [+2470 chars]",
+      "description": "The researchers' recently published study describes a way to re-activate apoptosis in mutated cells, which would amount to forcing cancer to self-destruct through a bioengineered, bonding molecule.",
+      "publishedAt": "2024-11-04T13:57:00Z",
+      "source": {
+        "id": null,
+        "name": "TechSpot"
+      },
+      "title": "Stanford researchers develop molecule that forces cancer cells to kill themselves - TechSpot",
+      "url": "https://www.techspot.com/news/105420-new-approach-uses-cancer-own-mutated-proteins-trigger.html",
+      "urlToImage": "https://www.techspot.com/images2/news/bigimage/2024/11/2024-11-04-image-5.jpg"
+    },
+    {
+      "author": "Natalie Rahhal",
+      "content": "November is Lung Cancer Awareness Month, which brings both good news and bad. On the one hand, overall rates of the disease and deaths from it have declined precipitously as smoking rates have plumme… [+7138 chars]",
+      "description": "We've made massive strides against the deadly disease, but rates haven't fallen for people diagnosed with the disease who've never smoked.",
+      "publishedAt": "2024-11-04T12:00:36Z",
+      "source": {
+        "id": null,
+        "name": "Yahoo Entertainment"
+      },
+      "title": "With smoking rates declining, so too are lung cancer deaths. For nonsmokers, the numbers tell a different story. - Yahoo Life",
+      "url": "https://www.yahoo.com/lifestyle/smoking-rates-declining-too-lung-120036320.html",
+      "urlToImage": "https://s.yimg.com/ny/api/res/1.2/eESpuo2h8u6226zq_6jIaw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA-/https://s.yimg.com/os/creatr-uploaded-images/2022-01/ee1ac410-6dc1-11ec-bb2f-e6f27f443014"
+    }
+  ],
+  "status": "ok",
+  "totalResults": 8
+}

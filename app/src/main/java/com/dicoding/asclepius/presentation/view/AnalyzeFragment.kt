@@ -15,7 +15,7 @@ import androidx.fragment.app.activityViewModels
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.helper.ImageClassifierHelper
-import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
+import com.dicoding.asclepius.presentation.viewmodel.HistoriesViewModel
 import com.google.android.material.color.MaterialColors
 import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.task.vision.classifier.Classifications
@@ -31,7 +31,7 @@ class AnalyzeFragment : Fragment() {
 	private var _binding: FragmentAnalyzeBinding? = null
 	private val binding get() = _binding!!
 
-	private val vm: AnalyzeResultsViewModel by activityViewModels()
+	private val vm: HistoriesViewModel by activityViewModels()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -200,7 +200,7 @@ class AnalyzeFragment : Fragment() {
 			confidenceScore = highestCategory.score,
 		)
 
-		vm.add(AnalyzeResultsViewModel.Event.OnSaved(result))
+		vm.add(HistoriesViewModel.Event.OnSaved(result))
 
 		val intent = Intent(requireContext(), ResultActivity::class.java)
 		intent.putExtra("analyze_result", result)

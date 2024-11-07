@@ -3,31 +3,31 @@ package com.dicoding.asclepius.presentation.viewmodel
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.viewModelScope
 import com.dicoding.asclepius.domain.models.AnalyzeResult
-import com.dicoding.asclepius.domain.repositories.AnalyzeResultsRepository
+import com.dicoding.asclepius.domain.repositories.HistoriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AnalyzeResultsViewModel @Inject constructor(
-	private val repo: AnalyzeResultsRepository,
+class HistoriesViewModel @Inject constructor(
+	private val repo: HistoriesRepository,
 ) : BaseViewModel<
-		AnalyzeResultsViewModel.State,
-		AnalyzeResultsViewModel.Event,
-		AnalyzeResultsViewModel.Effect>
+		HistoriesViewModel.State,
+		HistoriesViewModel.Event,
+		HistoriesViewModel.Effect>
 	(initialState = State.initial()) {
 
 	override fun add(event: Event) {
 		when (event) {
 			Event.OnFetch -> {
 				setState { copy(isFetching = true) }
-				fetchResults()
+				fetchHistories()
 				setState { copy(isFetching = false) }
 			}
 
 			Event.OnRefresh -> {
 				setState { copy(isRefreshing = true) }
-				fetchResults()
+				fetchHistories()
 				setState { copy(isRefreshing = false) }
 			}
 
@@ -37,14 +37,14 @@ class AnalyzeResultsViewModel @Inject constructor(
 		}
 	}
 
-	private fun fetchResults() {
+	private fun fetchHistories() {
 		viewModelScope.launch {
-			repo.getAnalyzeResults().collect { (results, error) ->
+			repo.getHistories().collect { (data, error) ->
 				if (error != null) {
 					setState { copy(error = error) }
 					sendEffect(Effect.ShowError(error))
 				} else {
-					setState { copy(results = results) }
+					setState { copy(histories = data) }
 				}
 			}
 		}
@@ -52,13 +52,13 @@ class AnalyzeResultsViewModel @Inject constructor(
 
 	private fun saveResultToHistory(result: AnalyzeResult) {
 		viewModelScope.launch {
-			val (isSaved, error) = repo.saveAnalyzeResult(result)
+			val (isSaved, error) = repo.saveResult(result)
 
 			if (error != null) {
 				sendEffect(Effect.ShowError(error))
 			} else {
 				if (isSaved) {
-					setState { copy(results = results + result) }
+					setState { copy(histories = histories + result) }
 				}
 			}
 		}
@@ -66,13 +66,13 @@ class AnalyzeResultsViewModel @Inject constructor(
 
 	private fun removeResultFromHistory(result: AnalyzeResult) {
 		viewModelScope.launch {
-			val (isDeleted, error) = repo.deleteAnalyzeResult(result)
+			val (isDeleted, error) = repo.deleteResult(result)
 
 			if (error != null) {
 				sendEffect(Effect.ShowError(error))
 			} else {
 				if (isDeleted) {
-					setState { copy(results = results - result) }
+					setState { copy(histories = histories - result) }
 				}
 			}
 		}
@@ -84,14 +84,14 @@ class AnalyzeResultsViewModel @Inject constructor(
 		val isFetching: Boolean,
 		val isRefreshing: Boolean,
 		val error: Throwable?,
-		val results: List<AnalyzeResult>,
+		val histories: List<AnalyzeResult>,
 	) {
 		companion object {
 			internal fun initial() = State(
 				isFetching = false,
 				isRefreshing = false,
 				error = null,
-				results = emptyList()
+				histories = emptyList()
 			)
 		}
 	}

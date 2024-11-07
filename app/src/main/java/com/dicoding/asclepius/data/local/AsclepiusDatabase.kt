@@ -8,5 +8,5 @@ import androidx.room.RoomDatabase
 	exportSchema = false
 )
 abstract class AsclepiusDatabase : RoomDatabase() {
-	abstract fun analyzeResultDao(): AnalyzeResultDao
+	abstract fun historiesDao(): HistoriesDao
 }

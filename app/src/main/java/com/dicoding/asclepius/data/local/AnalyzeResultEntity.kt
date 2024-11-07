@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.room.*
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 
-@Entity(tableName = "analyze_result")
+@Entity(tableName = "histories")
 data class AnalyzeResultEntity(
 	@PrimaryKey(autoGenerate = true) val id: Int = 0,
 	@ColumnInfo(name = "image_uri") val imageUri: String,

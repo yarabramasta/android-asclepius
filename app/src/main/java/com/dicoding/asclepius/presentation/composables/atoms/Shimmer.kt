@@ -58,7 +58,10 @@ fun ShimmerItem(
 					modifier = Modifier
 						.padding(vertical = 8.dp)
 						.fillMaxWidth()
-						.height(32.dp),
+						.height(
+							if (!overlineContent || !supportingContent) 32.dp
+							else 24.dp
+						),
 					animate = animate
 				)
 			},

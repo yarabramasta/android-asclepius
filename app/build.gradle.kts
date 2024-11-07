@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
 	id("com.android.application")
 	id("org.jetbrains.kotlin.android")
@@ -6,6 +8,14 @@ plugins {
 	id("com.google.devtools.ksp")
 	id("org.jetbrains.kotlin.plugin.serialization")
 	id("com.google.dagger.hilt.android")
+}
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+	localPropertiesFile.inputStream().use {
+		localProperties.load(it)
+	}
 }
 
 android {
@@ -21,6 +31,12 @@ android {
 		versionName = "1.0"
 
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+		buildConfigField(
+			type = "String",
+			name = "API_KEY",
+			value = localProperties["API_KEY"].toString()
+		)
 	}
 
 	buildTypes {
@@ -46,6 +62,7 @@ android {
 		compose = true
 		viewBinding = true
 		mlModelBinding = true
+		buildConfig = true
 	}
 }
 

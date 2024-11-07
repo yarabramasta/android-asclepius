@@ -17,22 +17,22 @@ import com.dicoding.asclepius.presentation.composables.atoms.HistoryListItem
 import com.dicoding.asclepius.presentation.composables.atoms.ShimmerItem
 import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 import com.dicoding.asclepius.presentation.composables.utils.rememberFlowWithLifecycle
-import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
+import com.dicoding.asclepius.presentation.viewmodel.HistoriesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreen(
 	modifier: Modifier = Modifier,
-	vm: AnalyzeResultsViewModel,
+	viewModel: HistoriesViewModel,
 ) {
-	val state by vm.state.collectAsStateWithLifecycle()
-	val effect = rememberFlowWithLifecycle(vm.effect)
+	val state by viewModel.state.collectAsStateWithLifecycle()
+	val effect = rememberFlowWithLifecycle(viewModel.effect)
 	val context = LocalContext.current
 
 	LaunchedEffect(effect) {
 		effect.collect {
 			when (it) {
-				is AnalyzeResultsViewModel.Effect.ShowError -> {
+				is HistoriesViewModel.Effect.ShowError -> {
 					Toast.makeText(
 						context,
 						it.error.message ?: "Something went wrong...",
@@ -45,16 +45,16 @@ fun HistoryScreen(
 
 	PullToRefreshBox(
 		isRefreshing = state.isRefreshing,
-		onRefresh = { vm.add(AnalyzeResultsViewModel.Event.OnRefresh) },
+		onRefresh = { viewModel.add(HistoriesViewModel.Event.OnRefresh) },
 		modifier = Modifier.fillMaxSize()
 	) {
 		HistoryScreenContent(
 			modifier = modifier,
-			histories = state.results.reversed(),
+			histories = state.histories.reversed(),
 			isLoading = state.isFetching || state.isRefreshing,
 			hasError = state.error != null,
 			onDeleteHistory = {
-				vm.add(AnalyzeResultsViewModel.Event.OnDeleteItem(it))
+				viewModel.add(HistoriesViewModel.Event.OnDeleteItem(it))
 			}
 		)
 	}

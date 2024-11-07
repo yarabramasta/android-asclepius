@@ -8,7 +8,7 @@ import androidx.lifecycle.*
 import com.dicoding.asclepius.databinding.FragmentHistoryBinding
 import com.dicoding.asclepius.presentation.composables.screens.HistoryScreen
 import com.dicoding.asclepius.presentation.composables.theme.AppTheme
-import com.dicoding.asclepius.presentation.viewmodel.AnalyzeResultsViewModel
+import com.dicoding.asclepius.presentation.viewmodel.HistoriesViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -21,14 +21,14 @@ class HistoryFragment : Fragment() {
 	private var _binding: FragmentHistoryBinding? = null
 	private val binding get() = _binding!!
 
-	private val vm: AnalyzeResultsViewModel by activityViewModels()
+	private val vm: HistoriesViewModel by activityViewModels()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
 		lifecycleScope.launch {
 			repeatOnLifecycle(Lifecycle.State.STARTED) {
-				vm.add(AnalyzeResultsViewModel.Event.OnFetch)
+				vm.add(HistoriesViewModel.Event.OnFetch)
 			}
 		}
 	}
@@ -47,7 +47,7 @@ class HistoryFragment : Fragment() {
 
 		binding.composeView.setContent {
 			AppTheme {
-				HistoryScreen(vm = vm)
+				HistoryScreen(viewModel = vm)
 			}
 		}
 	}

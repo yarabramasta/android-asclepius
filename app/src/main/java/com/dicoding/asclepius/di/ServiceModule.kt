@@ -2,8 +2,9 @@ package com.dicoding.asclepius.di
 
 import android.content.Context
 import androidx.room.Room
-import com.dicoding.asclepius.data.local.AnalyzeResultDao
 import com.dicoding.asclepius.data.local.AsclepiusDatabase
+import com.dicoding.asclepius.data.local.HistoriesDao
+import com.dicoding.asclepius.data.network.NewsApi
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -27,7 +28,7 @@ object ServiceModule {
 	@Singleton
 	fun provideOkHttp() = OkHttpClient
 		.Builder()
-		.connectTimeout(25, TimeUnit.SECONDS)
+		.connectTimeout(10, TimeUnit.SECONDS)
 		.addInterceptor(
 			HttpLoggingInterceptor().apply {
 				level = HttpLoggingInterceptor.Level.BODY
@@ -40,13 +41,15 @@ object ServiceModule {
 	fun provideRetrofit(okHttp: OkHttpClient): Retrofit =
 		Retrofit
 			.Builder()
-			.baseUrl("https://event-api.dicoding.dev")
-			.addConverterFactory(
-				Json.asConverterFactory("application/json; charset=UTF8".toMediaType())
-			)
+			.baseUrl("https://newsapi.org/v2")
+			.addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
 			.addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
 			.client(okHttp)
 			.build()
+
+	@Provides
+	@Singleton
+	fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create(NewsApi::class.java)
 
 	@Provides
 	@Singleton
@@ -60,6 +63,6 @@ object ServiceModule {
 
 	@Provides
 	@Singleton
-	fun provideAnalyzeResultDao(appDatabase: AsclepiusDatabase)
-			: AnalyzeResultDao = appDatabase.analyzeResultDao()
+	fun provideHistoriesDao(appDatabase: AsclepiusDatabase)
+			: HistoriesDao = appDatabase.historiesDao()
 }
