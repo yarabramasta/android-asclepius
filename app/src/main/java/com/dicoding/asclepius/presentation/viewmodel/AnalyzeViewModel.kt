@@ -2,11 +2,14 @@ package com.dicoding.asclepius.presentation.viewmodel
 
 import android.net.Uri
 import androidx.compose.runtime.Immutable
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AnalyzeViewModel @Inject constructor() : BaseViewModel<
+class AnalyzeViewModel @Inject constructor(
+	private val savedStateHandle: SavedStateHandle,
+) : BaseViewModel<
 		AnalyzeViewModel.State,
 		AnalyzeViewModel.Event,
 		AnalyzeViewModel.Effect>
@@ -31,6 +34,12 @@ class AnalyzeViewModel @Inject constructor() : BaseViewModel<
 					Effect.ShowToast("Successfully analyzed image in ${event.inferenceTime} ms")
 				)
 			}
+		}
+	}
+
+	init {
+		savedStateHandle.get<Uri>("currentPreviewImageUri")?.let { uri ->
+			add(Event.OnImagePreviewChanged(uri))
 		}
 	}
 

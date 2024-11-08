@@ -25,52 +25,57 @@
 				app:title="@string/result" />
 		</com.google.android.material.appbar.AppBarLayout>
 
-		<LinearLayout
+		<ScrollView
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:padding="24dp">
+			android:layout_height="match_parent">
 
-			<com.google.android.material.card.MaterialCardView
+			<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="360dp"
-				android:layout_gravity="center"
-				android:layout_marginBottom="24dp"
-				android:backgroundTint="@color/md_theme_surfaceContainerLow"
-				android:elevation="0dp"
-				android:foregroundGravity="center|fill">
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="24dp">
 
-				<ImageView
-					android:id="@+id/result_image"
+				<com.google.android.material.card.MaterialCardView
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:contentDescription="@string/img_preview_desc"
-					android:scaleType="centerCrop"
-					app:srcCompat="@drawable/ic_place_holder" />
-			</com.google.android.material.card.MaterialCardView>
+					android:layout_height="360dp"
+					android:layout_gravity="center"
+					android:layout_marginBottom="24dp"
+					android:backgroundTint="@color/md_theme_surfaceContainerLow"
+					android:elevation="0dp"
+					android:foregroundGravity="center|fill">
 
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="4dp"
-				android:text="@string/result"
-				android:textAppearance="@style/TextAppearance.Asclepius.HeadlineSmall" />
+					<ImageView
+						android:id="@+id/result_image"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:contentDescription="@string/img_preview_desc"
+						android:scaleType="centerCrop"
+						app:srcCompat="@drawable/ic_place_holder" />
+				</com.google.android.material.card.MaterialCardView>
 
-			<com.google.android.material.textview.MaterialTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:text="@string/result_description"
-				android:textAppearance="@style/TextAppearance.Asclepius.BodyMedium"
-				android:textColor="@color/md_theme_onSurfaceVariant" />
+				<com.google.android.material.textview.MaterialTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="4dp"
+					android:text="@string/result"
+					android:textAppearance="@style/TextAppearance.Asclepius.HeadlineSmall" />
 
-			<com.google.android.material.textview.MaterialTextView
-				android:id="@+id/result_text"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="24dp"
-				android:text="@string/result_placeholder"
-				android:textAppearance="@style/TextAppearance.Asclepius.TitleMedium" />
-		</LinearLayout>
+				<com.google.android.material.textview.MaterialTextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="16dp"
+					android:text="@string/result_description"
+					android:textAppearance="@style/TextAppearance.Asclepius.BodyMedium"
+					android:textColor="@color/md_theme_onSurfaceVariant" />
+
+				<com.google.android.material.textview.MaterialTextView
+					android:id="@+id/result_text"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="24dp"
+					android:text="@string/result_placeholder"
+					android:textAppearance="@style/TextAppearance.Asclepius.TitleMedium" />
+			</LinearLayout>
+		</ScrollView>
 	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

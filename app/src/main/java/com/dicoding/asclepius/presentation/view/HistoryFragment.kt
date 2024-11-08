@@ -64,9 +64,4 @@ class HistoryFragment : Fragment() {
 		@JvmStatic
 		fun newInstance() = HistoryFragment()
 	}
-
-	override fun onDestroyView() {
-		super.onDestroyView()
-		_binding = null
-	}
 }
