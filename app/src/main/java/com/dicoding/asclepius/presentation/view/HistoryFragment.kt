@@ -9,6 +9,7 @@ import com.dicoding.asclepius.databinding.FragmentHistoryBinding
 import com.dicoding.asclepius.presentation.composables.screens.HistoryScreen
 import com.dicoding.asclepius.presentation.composables.theme.AppTheme
 import com.dicoding.asclepius.presentation.viewmodel.HistoriesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
  * Use the [HistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class HistoryFragment : Fragment() {
 
 	private var _binding: FragmentHistoryBinding? = null

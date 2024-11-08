@@ -10,14 +10,18 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity.RESULT_CANCELED
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.*
+import androidx.lifecycle.*
 import com.dicoding.asclepius.databinding.FragmentAnalyzeBinding
 import com.dicoding.asclepius.domain.models.AnalyzeResult
 import com.dicoding.asclepius.helper.ImageClassifierHelper
+import com.dicoding.asclepius.presentation.viewmodel.AnalyzeViewModel
 import com.dicoding.asclepius.presentation.viewmodel.HistoriesViewModel
 import com.google.android.material.color.MaterialColors
 import com.yalantis.ucrop.UCrop
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.io.*
 
@@ -26,12 +30,36 @@ import java.io.*
  * Use the [AnalyzeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class AnalyzeFragment : Fragment() {
 
 	private var _binding: FragmentAnalyzeBinding? = null
 	private val binding get() = _binding!!
 
-	private val vm: HistoriesViewModel by activityViewModels()
+	private val analyzeViewModel: AnalyzeViewModel by viewModels()
+	private val historiesViewModel: HistoriesViewModel by activityViewModels()
+
+	private lateinit var state: AnalyzeViewModel.State
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		lifecycleScope.launch {
+			repeatOnLifecycle(Lifecycle.State.STARTED) {
+				analyzeViewModel.effect.collect {
+					when (it) {
+						is AnalyzeViewModel.Effect.ShowToast -> showToast(it.message)
+					}
+				}
+			}
+		}
+
+		lifecycleScope.launch {
+			analyzeViewModel.state.flowWithLifecycle(lifecycle).collectLatest {
+				state = it
+			}
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +80,19 @@ class AnalyzeFragment : Fragment() {
 			classifierListener = object : ImageClassifierHelper.ClassifierListener {
 				override fun onError(error: String) {
 					activity?.runOnUiThread {
-						showToast(error)
+						analyzeViewModel
+							.add(AnalyzeViewModel.Event.OnMessage(message = error))
 					}
 				}
 
 				override fun onResults(results: List<Classifications>?, inferenceTime: Long) {
 					activity?.runOnUiThread {
 						if (results.isNullOrEmpty()) {
-							showToast("Uh oh! Something went wrong...")
+							analyzeViewModel
+								.add(AnalyzeViewModel.Event.OnMessage("Uh oh! Something went wrong..."))
 						} else {
-							showToast("Successfully analyzed image in $inferenceTime ms")
+							analyzeViewModel
+								.add(AnalyzeViewModel.Event.OnClassifierResults(inferenceTime))
 							moveToResult(results)
 						}
 					}
@@ -85,16 +116,14 @@ class AnalyzeFragment : Fragment() {
 		fun newInstance() = AnalyzeFragment()
 	}
 
-	private var currentImageUri: Uri? = null
-
 	private val pickMedia = registerForActivityResult(
 		ActivityResultContracts.PickVisualMedia()
 	) { uri ->
 		if (uri != null) {
-			currentImageUri = uri
+			analyzeViewModel.add(AnalyzeViewModel.Event.OnImagePreviewChanged(uri))
 			startCrop(uri)
 		} else {
-			showToast("Image not found...")
+			analyzeViewModel.add(AnalyzeViewModel.Event.OnMessage("Image not found..."))
 		}
 	}
 
@@ -105,18 +134,18 @@ class AnalyzeFragment : Fragment() {
 			RESULT_OK -> UCrop.getOutput(result.data!!)
 
 			RESULT_CANCELED -> {
-				showToast("Image picked without crop.")
-				currentImageUri
+				analyzeViewModel.add(AnalyzeViewModel.Event.OnMessage("Image picked without crop."))
+				state.currentPreviewImageUri
 			}
 
 			else -> {
-				showToast("Failed to crop image...")
+				analyzeViewModel.add(AnalyzeViewModel.Event.OnMessage("Failed to crop image..."))
 				null
 			}
 		}
 
 		uri?.let {
-			currentImageUri = it
+			analyzeViewModel.add(AnalyzeViewModel.Event.OnImagePreviewChanged(it))
 			showImage()
 		}
 	}
@@ -156,7 +185,7 @@ class AnalyzeFragment : Fragment() {
 	}
 
 	private fun showImage() {
-		binding.previewImageView.setImageURI(currentImageUri)
+		binding.previewImageView.setImageURI(state.currentPreviewImageUri)
 		binding.previewImageView.visibility = View.VISIBLE
 		binding.analyzeButton.visibility = View.VISIBLE
 		binding.cancelButton.visibility = View.VISIBLE
@@ -169,43 +198,39 @@ class AnalyzeFragment : Fragment() {
 		binding.galleryButton.isClickable = false
 		binding.progressIndicator.visibility = View.VISIBLE
 
-		if (currentImageUri != null) {
-			imageClassifierHelper.classifyStaticImage(currentImageUri!!)
+		if (state.currentPreviewImageUri != null) {
+			imageClassifierHelper.classifyStaticImage(state.currentPreviewImageUri!!)
 		} else {
-			showToast("Cannot analyze empty image...")
+			analyzeViewModel.add(AnalyzeViewModel.Event.OnMessage("Cannot analyze empty image..."))
 		}
 	}
 
-	private fun cancelAnalyze() {
-		resetViewsState()
-	}
+	private fun cancelAnalyze() = resetViewsState()
 
 	private fun moveToResult(results: List<Classifications>) {
-		resetViewsState()
+		results.let { classification ->
+			if (classification.isNotEmpty() && classification[0].categories.isNotEmpty()) {
+				val label = classification[0].categories[0].label.trim()
+				val score = classification[0].categories[0].score
 
-		val categories = results[0].categories
-		if (categories.isEmpty()) {
-			showToast("No classification categories found")
-			return
+				val intent = Intent(requireContext(), ResultActivity::class.java)
+
+				if (state.currentPreviewImageUri != null) {
+					val result = AnalyzeResult(
+						imageUri = state.currentPreviewImageUri!!,
+						label = label,
+						confidenceScore = score,
+					)
+					historiesViewModel.add(HistoriesViewModel.Event.OnSaved(result))
+					intent.putExtra("analyze_result", result)
+				}
+
+				resetViewsState()
+				startActivity(intent)
+			} else {
+				analyzeViewModel.add(AnalyzeViewModel.Event.OnMessage("No classification categories found"))
+			}
 		}
-
-		val highestCategory = categories.maxByOrNull { it.score }
-		if (highestCategory == null) {
-			showToast("No highest classification category found")
-			return
-		}
-
-		val result = AnalyzeResult(
-			imageUri = currentImageUri!!,
-			label = highestCategory.label.trim(),
-			confidenceScore = highestCategory.score,
-		)
-
-		vm.add(HistoriesViewModel.Event.OnSaved(result))
-
-		val intent = Intent(requireContext(), ResultActivity::class.java)
-		intent.putExtra("analyze_result", result)
-		startActivity(intent)
 	}
 
 	private fun showToast(message: String) {
@@ -213,7 +238,7 @@ class AnalyzeFragment : Fragment() {
 	}
 
 	private fun getDestinationUri(): Uri {
-		if (currentImageUri == null) {
+		if (state.currentPreviewImageUri == null) {
 			throw IllegalStateException("Current image uri is null")
 		}
 
@@ -221,7 +246,7 @@ class AnalyzeFragment : Fragment() {
 		val file = File(requireContext().filesDir, fileName)
 
 		val resolver = requireContext().contentResolver
-		val inputStream: InputStream? = resolver.openInputStream(currentImageUri!!)
+		val inputStream: InputStream? = resolver.openInputStream(state.currentPreviewImageUri!!)
 		inputStream?.use { input ->
 			FileOutputStream(file).use { output ->
 				input.copyTo(output)
@@ -234,6 +259,7 @@ class AnalyzeFragment : Fragment() {
 	private fun resetViewsState() {
 		binding.previewImageView.visibility = View.GONE
 		binding.previewImageView.setImageURI(null)
+		analyzeViewModel.add(AnalyzeViewModel.Event.OnImagePreviewChanged(null))
 
 		binding.analyzeButton.visibility = View.GONE
 		binding.analyzeButton.isEnabled = true
@@ -247,6 +273,7 @@ class AnalyzeFragment : Fragment() {
 	}
 
 	override fun onDestroyView() {
+		analyzeViewModel.add(AnalyzeViewModel.Event.OnImagePreviewChanged(null))
 		super.onDestroyView()
 		_binding = null
 	}

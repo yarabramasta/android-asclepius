@@ -33,20 +33,19 @@
 
 			<com.google.android.material.card.MaterialCardView
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="360dp"
 				android:layout_gravity="center"
 				android:layout_marginBottom="24dp"
 				android:backgroundTint="@color/md_theme_surfaceContainerLow"
 				android:elevation="0dp"
-				android:foregroundGravity="center|fill"
-				android:minHeight="320dp">
+				android:foregroundGravity="center|fill">
 
 				<ImageView
 					android:id="@+id/result_image"
 					android:layout_width="match_parent"
-					android:layout_height="320dp"
+					android:layout_height="match_parent"
 					android:contentDescription="@string/img_preview_desc"
-					android:scaleType="fitCenter"
+					android:scaleType="centerCrop"
 					app:srcCompat="@drawable/ic_place_holder" />
 			</com.google.android.material.card.MaterialCardView>
 
